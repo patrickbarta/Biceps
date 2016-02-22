@@ -16,7 +16,7 @@ I used R version 3.2.3 under Ubuntu 15.10, with the `caret`, `gridExtra`, `rando
 
 # Raw data and tidying
 The sensor dataset was obtained from url's in the code below. These data are part of the [Human Activity Recognition project](http://groupware.les.inf.puc-rio.br/har) and described in the following publication: 
-Ugulino, W.; Cardador, D.; Vega, K.; Velloso, E.; Milidiu, R.; Fuks, H. *Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements*. **Proceedings of 21st Brazilian Symposium on Artificial Intelligence. Advances in Artificial Intelligence - SBIA 2012**. In: Lecture Notes in Computer Science. , pp. 52-61. Curitiba, PR: Springer Berlin / Heidelberg, 2012. ISBN 978-3-642-34458-9. DOI: 10.1007/978-3-642-34459-6_6.
+Ugulino, W.; Cardador, D.; Vega, K.; Velloso, E.; Milidiu, R.; Fuks, H. *Wearable Computing: Accelerometers' Data Classification of Body Postures and Movements*. **Proceedings of 21st Brazilian Symposium on Artificial Intelligence. Advances in Artificial Intelligence - SBIA 2012**. In: Lecture Notes in Computer Science. , pp. 52-61. Curitiba, PR: Springer Berlin / Heidelberg, 2012. ISBN 978-3-642-34458-9. DOI: 10.1007/978-3-642-34459-6_6. The download url's provide elementary codebook information used to understand the data.
 
 The following code was used to create the tidy data for this project. Comments relevant to each section of the code are given below.
 ```{r}
