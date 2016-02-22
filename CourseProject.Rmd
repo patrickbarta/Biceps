@@ -60,14 +60,14 @@ for (i in 1:52) {
 }
 # uncomment next line for grid of all variables. Visible on big monitor, a mess in html.
 # marrangeGrob(grobs=plt, nrow=13, ncol=4)
-# this shows a sample of 4 interesting plots, suitable for html
+# this shows a sample of 3 interesting plots and one uninteresting one, suitable for html
 grid.arrange(plt[[1]], plt[[41]], plt[[3]], plt[[31]], nrow=2)
 ```
 
-The commented line beginning with `summary` shows that the different classes are relatively evenly distributed in the data. Density plots for all feature variables were created in the `plt` list. The commented line beginning with `marrange` produces a grid of plots showing the density histograms of all the feature variables, but does not show well when processed to html, so the uncommented line shows the density histograms in the figure above (faceted by `classe` type) for three "interesting" featyres and one "uninteresting" feature. "Interesting" features differ significantly between classes, while "uninteresting" ones do not.
+The commented line beginning with `summary` shows that the different classes are relatively evenly distributed in the data. Density plots for all feature variables were created in the `plt` list. The commented line beginning with `marrange` produces a grid of plots showing the density histograms of all the feature variables, but does not show well when processed to html, so the uncommented line shows the density histograms in the figure above (faceted by `classe` type) for three "interesting" features and one "uninteresting" feature. "Interesting" features differ significantly between classes, while "uninteresting" ones do not.
 
 # Training for prediction
-There are many options for machine learning algorithms. In the original paper, the authors reported good prediction performance from a random forest algorithm, so I chose to try to reproduce that result. Given that they reported very good performance, it made sense to me to see if I could do the same, rather than experimenting with other algorithms. (If randoms forests work well, then why reinvent the wheel?) Before using R's random forests algorithm to train the model, I split the tidy training set into `myTraining` and `myTest` datasets, with 60% in the `myTrain` set and 40% in the `myTest` set used to test the random forests model. I chose to do 10-fold cross validation for the model training to balance bias versus variance. Further details of the final model (not shown) can be seen by uncommenting the last line of code.
+There are many options for machine learning algorithms. In the original paper, the authors reported good prediction performance from a random forest algorithm, so I chose to try to reproduce that result. Given that they reported very good performance, it made sense to me to see if I could do the same, rather than experimenting with other algorithms. (If random forests work well, then why reinvent the wheel?) Before using R's random forests algorithm to train the model, I split the tidy training set into `myTraining` and `myTest` datasets, with 60% in the `myTrain` set and 40% in the `myTest` set used to test the random forests model. I chose to do 10-fold cross validation for the model training to balance bias versus variance. Further details of the final model (not shown) can be seen by uncommenting the last line of code.
 ```{r}
 # partition tidyTest into a training and test set
 set.seed(42)  # the canonical choice
@@ -88,7 +88,7 @@ varImpPlot(myModel$finalModel)
 ```
 
 # Testing
-Now that we've build the model, we are most interested in its performance on the *test*, not the *training* set.
+Now that we've build the model, we are most interested in its performance on the **test**, not the **training** set.
 ```{r}
 # uncomment for accuracy on training set
 #myTrainPredictions <- predict(myModel, myTrain)
@@ -101,7 +101,7 @@ confusionMatrix(myTestPredictions, myTest$classe)
 The confusion matrix shows very good performance. Almost everything is assigned to the correct class with an accuracy of 99%.
 
 # Submission for quiz
-For the quiz for this section, we use the same model to predict on another testing set.
+For the quiz for this project, we use the same model to predict on another testing set.
 ```{r}
 # figure out predictions for grading
 courseraPredictions <- predict(myModel, tidyTest)
@@ -111,6 +111,6 @@ as.character(courseraPredictions)
 
 # Conclusions
 
-Basically, the performance of the random forest prediction model was outstanding (99%!). It is important though to point out that the number of subjects here in the study was very small, and that may indicate that the prediction be substantially less impressive on different subjects. Prediction for another test set, composed of different subjects, would likely perform less well but that performance would likely yield a much better estimate of how well random forests would perform in real life.
+Basically, the performance of the random forest prediction model was outstanding (99%)! It is important though to point out that the number of subjects in the study was very small, and prediction be substantially less impressive for different subjects. Prediction for another test set, composed of different subjects, would likely perform less well but that performance would likely yield a much better estimate of how well random forests would perform in real life.
 
 
