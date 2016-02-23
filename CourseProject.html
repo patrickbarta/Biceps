@@ -10,7 +10,7 @@
 
 <meta name="author" content="Patrick Barta, patrickbarta@patrickbarta.com" />
 
-<meta name="date" content="2016-02-11" />
+<meta name="date" content="2016-02-23" />
 
 <title>Prediction of Proper and Incorrect Biceps Exercise Performance by Random Forests</title>
 
@@ -64,13 +64,13 @@ img {
 <div id="header">
 <h1 class="title">Prediction of Proper and Incorrect Biceps Exercise Performance by Random Forests</h1>
 <h4 class="author"><em>Patrick Barta, <a href="mailto:patrickbarta@patrickbarta.com">patrickbarta@patrickbarta.com</a></em></h4>
-<h4 class="date"><em>February 11, 2016</em></h4>
+<h4 class="date"><em>February 23, 2016</em></h4>
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>In this project, mechanical sensor data from four subjects doing a biceps exercise five different ways (correctly and four additional incorrect ways) were used to build a machine learning model for predicting whether an individual was performing the exercise properly, and, if incorrectly, what kind of error was most likely. Using a random forest machine learning algorithm, the model performed very well, with a prediction accuracy near 99%.</p>
+<p>In this project, mechanical sensor data from six subjects who performed 10 repetitions of a biceps exercise five different ways (correctly and four additional incorrect ways) were used to build a machine learning model for predicting whether an individual was performing the exercise properly, and, if incorrectly, what kind of error was most likely. Using a random forest machine learning algorithm, the model performed very well, with a prediction accuracy near 99%.</p>
 </div>
 <div id="processing-environment" class="section level1">
 <h1>Processing environment</h1>
@@ -105,7 +105,7 @@ img {
     # uncomment below to show there is now no missing data
     # sum(is.na(tidyTrain)) + sum(is.na(tidyTest))
 }</code></pre>
-<p>The code above was written iteratively. The first two lines of code in Section 1 just download the data. On inspection of the data after downloading, it was clear that a significant amount of the data were missing–the cells were just empty–so the <code>na.string</code> argument of <code>read.csv</code> was added to ignore these cells. The commented <code>table</code> command, if executed, shows that 60 columns of the training set have no missing data, while 100 columns have 19216/19622 values missing. The 100 columns have so little data that they provide little information. Section 2 elimates these columns from both the testing and training sets. The first 7 columns of the data are not features, but information such as subject names and so forth, so these data were eliminated in Section 3. The commented code in Section 4, if executed, shows that there are no <code>NA</code>’s in the final tidy datasets. It is important to note that the original data appear to be data organized as a time series, but that the analysis here does not take this into account explicitly, instead just treating these data as independent samples of the feature set. The first 52 columns of the tidy datasets are mechanical features of the activty type such as roll, pitch, yaw, at 4 different locations: belt, arm, forearm and dumbbell. The last column of the training set, <code>classe</code>, shows the biceps activity being measured, with <code>A</code> denoting the “correct” activity, while the other levels are “incorrect”. The last column of the test set is just an index of the Coursera question number.</p>
+<p>The code above was written iteratively. The first two lines of code in Section 1 just download the data. On inspection of the data after downloading, it was clear that a significant amount of the data were missing–the cells were just empty–so the <code>na.string</code> argument of <code>read.csv</code> was added to ignore these cells. The commented <code>table</code> command, if executed, shows that 60 columns of the training set have no missing data, while 100 columns have 19216/19622 values missing. The 100 columns have so little data that they provide little information. Section 2 elimates these columns from both the testing and training sets. The first 7 columns of the data are not features, but information such as subject names and so forth, so these data were eliminated in Section 3. The commented code in Section 4, if executed, shows that there are no <code>NA</code>’s in the final tidy datasets. It is important to note that the original data appear to be organized as a time series, but my analysis here does not take this into account explicitly, instead just treating these data as independent samples from the feature set. The first 52 columns of the tidy datasets are mechanical features of the activty type such as roll, pitch, yaw, at 4 different locations: belt, arm, forearm and dumbbell. The last column of the training set, <code>classe</code>, shows the biceps activity being measured, with <code>A</code> denoting the “correct” activity, while the other levels are “incorrect”. The last column of the test set is just an index of the Coursera question number.</p>
 </div>
 <div id="exploratory-data-analysis" class="section level1">
 <h1>Exploratory data analysis</h1>
@@ -126,7 +126,7 @@ grid.arrange(plt[[1]], plt[[41]], plt[[3]], plt[[31]], nrow=2)</code></pre>
 </div>
 <div id="training-for-prediction" class="section level1">
 <h1>Training for prediction</h1>
-<p>There are many options for machine learning algorithms. In the original paper, the authors reported good prediction performance from a random forest algorithm, so I chose to try to reproduce that result. Given that they reported very good performance, it made sense to me to see if I could do the same, rather than experimenting with other algorithms. (If random forests work well, then why reinvent the wheel?) Before using R’s random forests algorithm to train the model, I split the tidy training set into <code>myTraining</code> and <code>myTest</code> datasets, with 60% in the <code>myTrain</code> set and 40% in the <code>myTest</code> set used to test the random forests model. I chose to do 10-fold cross validation for the model training to balance bias versus variance. Further details of the final model (not shown) can be seen by uncommenting the last line of code.</p>
+<p>There are many options for machine learning algorithms. In the original paper, the authors reported good prediction performance from a random forest algorithm, so I chose to try to reproduce that result. Given that they reported very good performance, it made sense to me to see if I could do the same, rather than experimenting with other algorithms. (If random forests work well, why reinvent the wheel?) Before using R’s random forests algorithm to train the model, I split the tidy training set into <code>myTraining</code> and <code>myTest</code> datasets, with 60% in the <code>myTrain</code> set and 40% in the <code>myTest</code> set used to test the random forests model. I did 10-fold cross validation in the model training to balance bias versus variance. Further details of the final model (not shown) can be seen by uncommenting the last line of code.</p>
 <pre class="r"><code># partition tidyTest into a training and test set
 set.seed(42)  # the canonical choice
 trainingIndices &lt;- createDataPartition(y = tidyTrain$classe, p = 0.6, list = FALSE)
